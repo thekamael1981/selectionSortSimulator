@@ -4,14 +4,13 @@ import path from "path";
 import { fileURLToPath } from "url";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
-  const plugins = [
-    react(),
-    runtimeErrorOverlay(),
-  ];
+  const plugins = [react(), runtimeErrorOverlay()];
 
+  // Hanya load cartographer jika bukan production dan REPL_ID ada
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID) {
     const { cartographer } = await import("@replit/vite-plugin-cartographer");
     plugins.push(cartographer());
@@ -28,13 +27,13 @@ export default defineConfig(async () => {
     },
     root: path.resolve(__dirname, "client"),
     build: {
-      outDir: path.resolve(__dirname, "dist/public"), // output ke dist/public
+      outDir: path.resolve(__dirname, "dist", "public"), // hasil build masuk ke dist/public
       emptyOutDir: true,
     },
     server: {
       fs: {
-        strict: true,
-        deny: ["**/.*"],
+        allow: [__dirname], // izinkan akses file dari folder project
+        deny: ["**/.*"],     // larang file hidden
       },
     },
   };
