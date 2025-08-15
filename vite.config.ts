@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig(async () => {
   const plugins = [react(), runtimeErrorOverlay()];
 
-  // Hanya load cartographer jika bukan production dan REPL_ID ada
+  // Tambahkan plugin Cartographer hanya saat dev di Replit
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID) {
     const { cartographer } = await import("@replit/vite-plugin-cartographer");
     plugins.push(cartographer());
@@ -27,13 +27,14 @@ export default defineConfig(async () => {
     },
     root: path.resolve(__dirname, "client"),
     build: {
-      outDir: path.resolve(__dirname, "dist", "public"), // hasil build masuk ke dist/public
+      // output hasil build di dalam folder client/dist
+      outDir: "dist",
       emptyOutDir: true,
     },
     server: {
       fs: {
-        allow: [__dirname], // izinkan akses file dari folder project
-        deny: ["**/.*"],     // larang file hidden
+        strict: true,
+        deny: ["**/.*"],
       },
     },
   };
