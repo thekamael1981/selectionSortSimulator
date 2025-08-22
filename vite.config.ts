@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
   const plugins = [react(), runtimeErrorOverlay()];
+  base: "./"
 
   // Tambahkan plugin Cartographer hanya saat dev di Replit
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID) {
