@@ -9,7 +9,6 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
   const plugins = [react(), runtimeErrorOverlay()];
-  base: "./"
 
   // Tambahkan plugin Cartographer hanya saat dev di Replit
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID) {
@@ -18,6 +17,7 @@ export default defineConfig(async () => {
   }
 
   return {
+    base: "./", // <- perbaikan, sekarang valid
     plugins,
     resolve: {
       alias: {
@@ -28,8 +28,7 @@ export default defineConfig(async () => {
     },
     root: path.resolve(__dirname, "client"),
     build: {
-      // output hasil build di dalam folder client/dist
-      outDir: "dist",
+      outDir: "dist", // build ke client/dist
       emptyOutDir: true,
     },
     server: {
