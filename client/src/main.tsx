@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import App from "./App";
 
-const container = document.getElementById("root");
-if (!container) throw new Error("Root element with id 'root' not found");
+const rootElement = document.getElementById("root");
 
-const root = ReactDOM.createRoot(container);
-root.render(
-  <React.StrictMode>
-    <h1>Hello Vercel!</h1>
-  </React.StrictMode>
-);
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+} else {
+  console.error("Root element not found");
+}
