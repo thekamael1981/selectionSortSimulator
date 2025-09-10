@@ -4,12 +4,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
-    "build:client": "vite build",
-    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "build": "vite build --config vite.config.ts",
-    "vercel-build": "cd client && npm install && npm run build",
+    "dev": "tsx server/index.ts",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && xcopy /E /I /Y dist\\public server\\public",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
@@ -95,7 +91,6 @@
     "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
-    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "drizzle-kit": "^0.18.1",
     "esbuild": "^0.25.0",
@@ -103,7 +98,7 @@
     "tailwindcss": "^3.4.17",
     "tsx": "^4.20.3",
     "typescript": "5.6.3",
-    "vite": "^6.3.5"
+    "vite": "^7.0.5"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
